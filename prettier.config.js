@@ -1,0 +1,1 @@
+module.exports = require('@ao-internal/prettier-config');

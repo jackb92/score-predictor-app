@@ -1,0 +1,92 @@
+.predictionMainContainer {
+	padding: 20px;
+	box-shadow: 5px 5px 18px #888888;
+	border-radius: 10px;
+	height: 100%;
+	width: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.gameContainer {
+	width: 100%;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.teamAContainer,
+.teamBContainer {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.teamBContainer {
+	flex-direction: row-reverse;
+}
+
+.scorePredictContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.incrementButton,
+.decrementButton {
+	font-size: 16px;
+	font-weight: 700;
+	border: 1px solid black;
+	margin: 3px;
+	cursor: pointer;
+	background: lightgray;
+	border-radius: 5px;
+}
+
+.incrementButton {
+	color: green;
+}
+
+.decrementButton {
+	color: red;
+}
+
+.teamANameStyle {
+	padding-right: 30px;
+}
+
+.teamBNameStyle {
+	padding-left: 30px;
+}
+
+.gameDetailsContainer {
+	padding-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 12px;
+}
+
+.teamACrestContainer {
+	padding-right: 20px;
+}
+
+.teamBCrestContainer {
+	padding-left: 20px;
+}
+
+.teamBNameAndScoreContainer {
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.teamANameAndScoreContainer {
+	display: flex;
+}
+
+.generateScoreContainer {
+	display: flex;
+}
