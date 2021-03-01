@@ -1,7 +1,6 @@
 import styles from '../styles/GameCard.module.css';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import data from '../pages/data';
 
 const teamContainerStyleMap = {
 	a: styles.teamAContainer,
@@ -19,6 +18,10 @@ const teamCrestContainerMap = {
 	a: styles.teamACrestContainer,
 	b: styles.teamBCrestContainer,
 };
+const buttonContainerStyleMap = {
+	a: styles.teamAButtonContainer,
+	b: styles.teamBButtonContainer,
+};
 
 const clubCrestImageMap = {
 	a: <Image src="/club-crest-image/liverpool.png" width={25} height={37.5} />,
@@ -31,15 +34,31 @@ const clubCrestImageMap = {
 	),
 };
 
-const currentDate = new Date();
+function TeamCard({ team = 'a', predictedScore, setPredictedScore }) {
+	const teamContainerStyles = teamContainerStyleMap[team];
+	const teamNameStyles = teamNameStyleMap[team];
+	const teamNameAndScoreContainer = teamNameAndScoreContainerMap[team];
+	const teamCrestContainer = teamCrestContainerMap[team];
+	const clubCrestImage = clubCrestImageMap[team];
 
-function TeamCard({ team = 'a', predictedScore, setPredictedScore, kickoff }) {
-	function displayIncrementPredictionButton() {
-		if (currentDate > kickoff) {
-			return null;
-		}
+	return (
+		<div className={teamContainerStyles}>
+			<div className={teamCrestContainer}>{clubCrestImage}</div>
+			<div className={styles.scorePredictContainer}>
+				<div className={teamNameAndScoreContainer}>
+					<div className={teamNameStyles}>Team {team.toUpperCase()}</div>
+					{predictedScore}
+				</div>
+			</div>
+		</div>
+	);
+}
 
-		return (
+function PredictorButton({ team = 'a', predictedScore, setPredictedScore }) {
+	const buttonContainerStyles = buttonContainerStyleMap[team];
+
+	return (
+		<div className={buttonContainerStyles}>
 			<button
 				aria-label={`Increment team ${team.toUpperCase()} score`}
 				type="button"
@@ -47,15 +66,6 @@ function TeamCard({ team = 'a', predictedScore, setPredictedScore, kickoff }) {
 				className={styles.incrementButton}>
 				+
 			</button>
-		);
-	}
-	function displayDecrementPredictionButton() {
-		const currentDate = new Date();
-
-		if (currentDate > kickoff) {
-			return null;
-		}
-		return (
 			<button
 				aria-label={`Decrement team ${team.toUpperCase()} score`}
 				type="button"
@@ -67,54 +77,25 @@ function TeamCard({ team = 'a', predictedScore, setPredictedScore, kickoff }) {
 				className={styles.decrementButton}>
 				-
 			</button>
-		);
-	}
-	const teamContainerStyles = teamContainerStyleMap[team];
-	const teamNameStyles = teamNameStyleMap[team];
-	const teamNameAndScoreContainer = teamNameAndScoreContainerMap[team];
-	const teamCrestContainer = teamCrestContainerMap[team];
-	const clubCrestImage = clubCrestImageMap[team];
-
-	return (
-		<div className={teamContainerStyles}>
-			<div className={teamCrestContainer}>{clubCrestImage}</div>
-			<div className={styles.scorePredictContainer}>
-				{displayIncrementPredictionButton()}
-				<div className={teamNameAndScoreContainer}>
-					<div className={teamNameStyles}>Team {team.toUpperCase()}</div>
-					{predictedScore}
-				</div>
-				{displayDecrementPredictionButton()}
-			</div>
 		</div>
 	);
 }
 
-function TimeAndLocation({ kickoffDetails }) {
+function TimeAndLocation() {
 	return (
 		<div className={styles.gameDetailsContainer}>
 			<div>Anfield</div>
-			<div>{kickoffDetails}</div>
+			<div>02 February 15:00</div>
 		</div>
 	);
 }
 
 function GameCard({ teamA, teamB, finalWhistle, kickoff }) {
-	const options = {
-		weekday: 'short',
-		month: 'short',
-		day: 'numeric',
-		hour: 'numeric',
-		minute: 'numeric',
-	};
 	const [teamAPredictedScore, setTeamAPredictedScore] = useState(null);
 	const [teamBPredictedScore, setTeamBPredictedScore] = useState(null);
 	const [teamAActualScore, setTeamAActualScore] = useState(teamA.goalsScored);
 	const [teamBActualScore, setTeamBActualScore] = useState(teamB.goalsScored);
 	const [score, setScore] = useState(null);
-	const [kickoffDetails] = useState(
-		kickoff.toLocaleDateString('en-US', options)
-	);
 
 	useEffect(() => {
 		if (teamAActualScore !== null && teamBActualScore !== null) {
@@ -134,24 +115,29 @@ function GameCard({ teamA, teamB, finalWhistle, kickoff }) {
 		teamBActualScore,
 		setScore,
 	]);
+
+	console.log(finalWhistle);
+
 	return (
 		<div className={styles.predictionMainContainer}>
-			<TimeAndLocation kickoffDetails={kickoffDetails} />
+			<TimeAndLocation />
 			<div className={styles.gameContainer}>
-				<TeamCard
-					predictedScore={teamAPredictedScore}
-					setPredictedScore={setTeamAPredictedScore}
-					finalWhistle={finalWhistle}
-					kickoff={kickoff}
-				/>
+				<TeamCard predictedScore={teamAPredictedScore} />
+				{!finalWhistle && (
+					<PredictorButton
+						predictedScore={teamAPredictedScore}
+						setPredictedScore={setTeamAPredictedScore}
+					/>
+				)}
 				-
-				<TeamCard
-					team="b"
-					predictedScore={teamBPredictedScore}
-					setPredictedScore={setTeamBPredictedScore}
-					finalWhistle={finalWhistle}
-					kickoff={kickoff}
-				/>
+				<TeamCard team="b" predictedScore={teamBPredictedScore} />
+				{!finalWhistle && (
+					<PredictorButton
+						team="b"
+						predictedScore={teamBPredictedScore}
+						setPredictedScore={setTeamBPredictedScore}
+					/>
+				)}
 			</div>
 			{finalWhistle && (
 				<div className={styles.generateScoreContainer}>
@@ -201,11 +187,13 @@ export function getPoints(
 
 export default GameCard;
 
+//update so cant predict if after kick off time
 //add form to manually amend fixture data
 //add stadium to gamecard
+//add time to gamecard
 
 const teamData = {
-	liverpool: {
+	Liverpool: {
 		stadiumName: 'Anfield',
 		clubCrest: 'liverpool.png',
 	},

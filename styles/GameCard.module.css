@@ -44,6 +44,8 @@
 	cursor: pointer;
 	background: lightgray;
 	border-radius: 5px;
+	height: 25px;
+	width: 25px;
 }
 
 .incrementButton {
@@ -89,4 +91,15 @@
 
 .generateScoreContainer {
 	display: flex;
+}
+
+.teamAButtonContainer,
+.teamAButtonContainer {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+}
+
+.teamAButtonContainer {
+	align-items: end;
 }
