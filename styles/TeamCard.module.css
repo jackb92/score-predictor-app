@@ -56,44 +56,36 @@
 	color: red;
 }
 
-.teamANameStyle {
-	padding-right: 30px;
-}
-
+.teamANameStyle,
 .teamBNameStyle {
-	padding-left: 30px;
-}
-
-.gameDetailsContainer {
-	padding-bottom: 20px;
-	display: flex;
-	flex-direction: column;
+	font-size: 14px;
+	height: 40px;
 	align-items: center;
-	font-size: 12px;
-}
-
-.teamACrestContainer {
-	padding-right: 20px;
-}
-
-.teamBCrestContainer {
-	padding-left: 20px;
+	display: flex;
+	width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
 }
 
 .teamBNameAndScoreContainer {
 	display: flex;
 	flex-direction: row-reverse;
+	align-items: center;
+	padding-left: 2px;
+	justify-content: end;
 }
 
 .teamANameAndScoreContainer {
+	align-items: center;
 	display: flex;
+	padding-right: 2px;
 }
 
 .generateScoreContainer {
 	display: flex;
 }
 
-.teamAButtonContainer,
+clubAndScoreContainer .teamAButtonContainer,
 .teamAButtonContainer {
 	display: flex;
 	flex-direction: column;
@@ -102,4 +94,5 @@
 
 .teamAButtonContainer {
 	align-items: end;
+	border: solid 1px red;
 }

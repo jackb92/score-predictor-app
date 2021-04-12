@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import TimeAndLocation from './TimeAndLocation';
 import TeamCard from './TeamCard';
 import getPoints from './getPoints';
+import Fixture from './fixtures';
 
-function GameCard({ teamA, teamB, finalWhistle, kickoff }) {
+function GameCard({ fixture }) {
 	const options = {
 		weekday: 'short',
 		month: 'short',
@@ -14,8 +15,12 @@ function GameCard({ teamA, teamB, finalWhistle, kickoff }) {
 	};
 	const [teamAPredictedScore, setTeamAPredictedScore] = useState(null);
 	const [teamBPredictedScore, setTeamBPredictedScore] = useState(null);
-	const [teamAActualScore, setTeamAActualScore] = useState(teamA.goalsScored);
-	const [teamBActualScore, setTeamBActualScore] = useState(teamB.goalsScored);
+	const [teamAActualScore, setTeamAActualScore] = useState(
+		fixture.homeTeamScore
+	);
+	const [teamBActualScore, setTeamBActualScore] = useState(
+		fixture.awayTeamScore
+	);
 	const [score, setScore] = useState(null);
 	const [kickoffDetails] = useState(
 		kickoff.toLocaleDateString('en-US', options)
@@ -51,7 +56,7 @@ function GameCard({ teamA, teamB, finalWhistle, kickoff }) {
 					setPredictedScore={setTeamAPredictedScore}
 					finalWhistle={finalWhistle}
 					kickoff={kickoff}
-					homeClub={teamA.teamName}
+					homeClub={fixture.homeTeam.name}
 				/>
 				-
 				<TeamCard
@@ -59,9 +64,9 @@ function GameCard({ teamA, teamB, finalWhistle, kickoff }) {
 					team="b"
 					predictedScore={teamBPredictedScore}
 					setPredictedScore={setTeamBPredictedScore}
-					finalWhistle={finalWhistle}
-					kickoff={kickoff}
-					awayClub={teamB.teamName}
+					finalWhistle={fixture.finalWhistle}
+					kickoff={fixture.kickoff}
+					awayClub={fixture.awayTeam.name}
 				/>
 			</div>
 			{finalWhistle && (

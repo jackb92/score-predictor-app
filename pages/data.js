@@ -1,27 +1,27 @@
 module.exports = [
 	{
 		teamA: {
-			name: 'Liverpool',
+			teamName: 'Liverpool',
 			goalsScored: 4,
 		},
 		teamB: {
-			name: 'Manchester United',
+			teamName: 'Manchester United',
 			goalsScored: 2,
 		},
 		finalWhistle: true,
-		kickoff: new Date('03/01/2021 15:00'),
+		kickoff: new Date('05/01/2021 15:00'),
 	},
 
 	{
 		teamA: {
-			name: 'Liverpool',
-			goals: 0,
+			teamName: 'Chelsea',
+			goalsScored: 1,
 		},
 		teamB: {
-			name: 'Manchester United',
-			goals: 0,
+			teamName: 'Arsenal',
+			goalsScored: 0,
 		},
-		finalWhistle: false,
-		kickoff: new Date('03/05/2021 15:00'),
+		finalWhistle: true,
+		kickoff: new Date('01/05/2021 19:00'),
 	},
 ];

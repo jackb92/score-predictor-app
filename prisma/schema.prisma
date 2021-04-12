@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id              Int               @id @default(autoincrement())
+  email           String            @unique
+  password        String
+  name            String
+  FixturesOnUsers FixturesOnUsers[]
+}
+
+model Team {
+  id           Int       @id @default(autoincrement())
+  name         String
+  shortName    String    @unique
+  stadium      Stadium?
+  homeFixtures Fixture[] @relation("homeFixtures")
+  awayFixtures Fixture[] @relation("awayFixtures")
+}
+
+model Stadium {
+  id     Int    @id @default(autoincrement())
+  name   String
+  Team   Team   @relation(fields: [teamId], references: [id])
+  teamId Int
+}
+
+model Fixture {
+  id              Int               @id @default(autoincrement())
+  kickOff         DateTime
+  finalWhistle    Boolean
+  homeTeam        Team              @relation("homeFixtures", fields: [homeTeamId], references: [id])
+  homeTeamId      Int
+  awayTeam        Team              @relation("awayFixtures", fields: [awayTeamId], references: [id])
+  awayTeamId      Int
+  FixturesOnUsers FixturesOnUsers[]
+  homeTeamScore   Int
+  awayTeamScore   Int
+}
+
+model FixturesOnUsers {
+  user                   User    @relation(fields: [userId], references: [id])
+  userId                 Int
+  fixture                Fixture @relation(fields: [fixtureId], references: [id])
+  fixtureId              Int
+  homeTeamPredictedScore Int
+  awayTeamPredictedScore Int
+  points                 Int
+
+  @@id([userId, fixtureId])
+}

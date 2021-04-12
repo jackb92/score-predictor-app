@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import FixturesTable from '../components/FixturesTable';
 import GameCard from '../components/GameCard';
 import Header from '../components/Header';
 import data from './data';
