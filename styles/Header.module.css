@@ -1,6 +1,15 @@
 .headerContainer {
-	background-color: lightskyblue;
-	height: 75px;
+	background-color: midnightblue;
+	height: 85px;
 	width: 100%;
-	margin-bottom: 50px;
+	margin-bottom: 25px;
+	color: white;
+	padding: 10px;
+	position: sticky;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 2px solid white;
+	z-index: 1;
 }

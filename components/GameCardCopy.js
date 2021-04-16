@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import TimeAndLocation from './TimeAndLocation';
 import TeamCard from './TeamCard';
 import getPoints from './getPoints';
-import Fixture from './fixtures';
+import MinimiseButton from './MinimiseButton';
 
-function GameCard({ fixture }) {
+function GameCardCopy({ fixture }) {
 	const options = {
 		weekday: 'short',
 		month: 'short',
@@ -22,9 +22,10 @@ function GameCard({ fixture }) {
 		fixture.awayTeamScore
 	);
 	const [score, setScore] = useState(null);
-	const [kickoffDetails] = useState(
-		kickoff.toLocaleDateString('en-US', options)
+	const [kickOffDetails] = useState(
+		new Date(fixture.kickOff).toLocaleDateString('en-US', options)
 	);
+	const [unfilteredKickoff] = useState(fixture.kickOff);
 
 	useEffect(() => {
 		if (teamAActualScore !== null && teamBActualScore !== null) {
@@ -46,37 +47,40 @@ function GameCard({ fixture }) {
 	]);
 	return (
 		<div className={styles.predictionMainContainer}>
+			{/* <MinimiseButton /> */}
 			<TimeAndLocation
-				kickoffDetails={kickoffDetails}
-				// stadiumName={stadiumName}
+				kickoffDetails={kickOffDetails}
+				stadiumName={fixture.homeTeam.name}
 			/>
 			<div className={styles.gameContainer}>
 				<TeamCard
+					unfilteredKickoff={unfilteredKickoff}
 					predictedScore={teamAPredictedScore}
 					setPredictedScore={setTeamAPredictedScore}
-					finalWhistle={finalWhistle}
-					kickoff={kickoff}
-					homeClub={fixture.homeTeam.name}
+					finalWhistle={fixture.finalWhistle}
+					kickoff={kickOffDetails}
+					homeClub={fixture.homeTeam.shortName}
 				/>
 				-
 				<TeamCard
 					homeOrAway="away"
 					team="b"
+					unfilteredKickoff={unfilteredKickoff}
 					predictedScore={teamBPredictedScore}
 					setPredictedScore={setTeamBPredictedScore}
 					finalWhistle={fixture.finalWhistle}
-					kickoff={fixture.kickoff}
-					awayClub={fixture.awayTeam.name}
+					kickoff={kickOffDetails}
+					awayClub={fixture.awayTeam.shortName}
 				/>
 			</div>
-			{finalWhistle && (
+			{fixture.finalWhistle && (
 				<div className={styles.generateScoreContainer}>
 					{teamAActualScore} : {teamBActualScore}
 				</div>
 			)}
-			{finalWhistle && <span>Your Score {score}</span>}
+			{fixture.finalWhistle && <span>Your Score {score}</span>}
 		</div>
 	);
 }
 
-export default GameCard;
+export default GameCardCopy;

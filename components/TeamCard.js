@@ -19,12 +19,20 @@ const teamCrestContainerMap = {
 };
 
 const clubCrestImageMap = {
-	a: <Image src="/club-crest-image/liverpool.png" width={25} height={37.5} />,
+	a: (
+		<Image
+			src="/club-crest-image/liverpool.png"
+			width={25}
+			height={37.5}
+			alt="Liverpool club crest"
+		/>
+	),
 	b: (
 		<Image
 			src="/club-crest-image/manchester-united.png"
 			width={30}
 			height={32}
+			alt="Manchester United club crest"
 		/>
 	),
 };
@@ -35,7 +43,7 @@ export default function TeamCard({
 	team = 'a',
 	predictedScore,
 	setPredictedScore,
-	kickoff,
+	unfilteredKickoff,
 	homeClub,
 	awayClub,
 }) {
@@ -46,7 +54,7 @@ export default function TeamCard({
 	const clubCrestImage = clubCrestImageMap[team];
 
 	function displayIncrementPredictionButton() {
-		if (currentDate > kickoff) {
+		if (currentDate > new Date(unfilteredKickoff)) {
 			return null;
 		}
 
@@ -61,11 +69,10 @@ export default function TeamCard({
 		);
 	}
 	function displayDecrementPredictionButton() {
-		const currentDate = new Date();
-
-		if (currentDate > kickoff) {
+		if (currentDate > new Date(unfilteredKickoff)) {
 			return null;
 		}
+
 		return (
 			<button
 				aria-label={`Decrement team ${team.toUpperCase()} score`}

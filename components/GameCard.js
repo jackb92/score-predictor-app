@@ -42,7 +42,7 @@ function GameCard({ teamA, teamB, finalWhistle, kickoff }) {
 	return (
 		<div className={styles.predictionMainContainer}>
 			<TimeAndLocation
-				kickoffDetails={kickoffDetails}
+				kickoffDetaiss={kickoffDetails}
 				// stadiumName={stadiumName}
 			/>
 			<div className={styles.gameContainer}>
