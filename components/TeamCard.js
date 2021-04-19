@@ -1,5 +1,8 @@
 import styles from '../styles/TeamCard.module.css';
 import Image from 'next/image';
+import React, { useState, useRef } from 'react';
+import Button from 'react-bootstrap/Button';
+import Overlay from 'react-bootstrap/Overlay';
 
 const teamContainerStyleMap = {
 	a: styles.teamAContainer,
@@ -96,8 +99,27 @@ export default function TeamCard({
 		return <div className={teamNameStyles}>{awayClub}</div>;
 	}
 
+	function previousFixturesPopOut() {
+		const [show, setShow] = useState(false);
+		const target = useRef(null);
+
+		return (
+			<>
+				<Button ref={target} onClick={() => setShow(!show)}>
+					Click me to see
+				</Button>
+				<Overlay target={target.current} show={show} placement="right">
+					{({ placement, arrowProps, show: _show, popper, ...props }) => (
+						<div {...props}>Simple tooltip</div>
+					)}
+				</Overlay>
+			</>
+		);
+	}
+
 	return (
 		<div className={teamContainerStyles}>
+			{/* <div>{previousFixturesPopOut()}</div> */}
 			<div className={teamCrestContainer}>{clubCrestImage}</div>
 			<div className={styles.scorePredictContainer}>
 				{displayIncrementPredictionButton()}
